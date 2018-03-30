@@ -137,6 +137,7 @@ input[type=number]::-webkit-outer-spin-button {
     justify-content: space-between;
     p{
       color: #999;
+      margin: 5px 0;
     }
   }
 }
@@ -202,6 +203,9 @@ input[type=number]::-webkit-outer-spin-button {
     cursor: pointer;
     &:hover{
       transform: scale(1.5);
+    }
+    &.transparent{
+      background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVQ4T2N89uzZfwY8QFJSEp80A+OoAcMiDP7//483HTx//hx/Ohg1gIFx6IcBALl+VXknOCvFAAAAAElFTkSuQmCC);
     }
   }
 }

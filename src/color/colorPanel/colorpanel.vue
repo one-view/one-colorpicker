@@ -58,7 +58,7 @@
       <div class="one-color-stash">
         <div class="one-color-stash-wrap">
           <ul>
-            <li @click="setColor(item)" v-for="item in stash" :style="{backgroundColor: item}"></li>
+            <li @click="setColor(item)" v-for="item in stash" :style="{backgroundColor: item}" :class="{'transparent': item === 'rgba(255,255,255,0)'}"></li>
           </ul>
         </div>
         <a href="javascript:;" class="one-color-toggle" @click="toggleStash"></a>

@@ -10,8 +10,8 @@
   }
 }
 .color-block{
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
   position: relative;
   .color-block-layer{

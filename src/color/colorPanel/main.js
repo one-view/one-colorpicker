@@ -4,6 +4,8 @@ import Slider from './slider.vue'
 
 export default {
   data () {
+    let origin = getTinyColor(this.value)
+    let {h, s, v} = origin.hsv
     return {
       colorMode: {
         type: ['hex', 'rgb'],
@@ -16,13 +18,13 @@ export default {
       sizeInfo: {},
       // color value in data logic
       color: {
-        hue: 0,
-        saturation: 100,
-        value: 100
+        hue: h,
+        saturation: s,
+        value: v
       },
       // value: 100,
       // origin calculated by tinycolor
-      origin: getTinyColor(this.value)
+      origin
     }
   },
   components: {
@@ -43,6 +45,9 @@ export default {
     hsvString () {
       let {alpha, hsv: {h, s, v}} = this.origin
       return `hsva(${h}, ${s}%, ${v}%, ${alpha})`
+    },
+    hexString () {
+      return this.origin.hex
     },
     // 仅返回当前颜色的色相，hue值
     hueString () {
@@ -97,6 +102,7 @@ export default {
   watch: {
     value (val) {
       this.resetOrigin(val)
+      if (!this.isDragging) this.resetColor()
     }
   },
   /**
@@ -134,8 +140,10 @@ export default {
       if (this.stashMode.idx >= this.stashMode.type.length) this.stashMode.idx = 0
     },
     emitChange () {
-      this.$emit('input', this[`${this.colorType}String`])
-      this.$emit('change', this[`${this.colorType}String`])
+      this.$nextTick(() => {
+        this.$emit('input', this[`${this.colorType}String`])
+        this.$emit('change', this[`${this.colorType}String`])
+      })
     },
     /**
      * 右侧滑动条控制色相的配置, 改变色相后，将元数据重置
@@ -194,7 +202,6 @@ export default {
       saturation = Math.round(getValInRange(saturation, 0, 100))
       value = Math.round(getValInRange(value, 0, 100))
 
-      console.log(saturation, value)
       this.color.saturation = saturation
       this.color.value = value
 
@@ -216,10 +223,5 @@ export default {
       window[type]('mouseup', this.onDragEnd)
       window[type]('contextmenu', this.onDragEnd)
     }
-  },
-  mounted () {
-    // 初始化颜色
-    this.resetColor()
-    window.vcolor = this
   }
 }

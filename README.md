@@ -1,17 +1,19 @@
 # one-colorpicker
+A Chrome-style ColorPicker
 
+![img](./ScreenShot.png)
 
+## How to use
 ```
-import {ColorPicker, ColorPanel} from '@portal/one-colorpicker'
-
+// import
+import {ColorPicker, ColorPanel} from 'one-colorpicker'
 Vue.use(ColorPanel)
 Vue.use(ColorPicker)
 
-## application code
-
-<color-picker :value="colorA" @change="color => this.colorA = color"></color-picker>
+// dom
+<color-picker v-model="color" @change="change"></color-picker>
+<color-panel v-model="color"></color-panel>
 ```
-
 
 ## Build Setup
 

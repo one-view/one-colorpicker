@@ -31,9 +31,11 @@
 <template>
 
 <div id="app">
+    <br><br><br>
     <h1>One-Color-Picker</h1>
-    <p>of chrome colorpicker style</p>
-    <br><br><br><br><br><br>
+    <p>a chrome-style colorpicker</p>
+    <br><br><br>
+    <br><br><br>
     <div class="form">
         <span :style="{backgroundColor: color, color: '#fff'}">{{ color }} Choose Color Click blocks below</span>
         <!-- <v-colorpanel :value="color" @change="change"></v-colorpanel> -->
@@ -42,18 +44,16 @@
         <br>
         <div class="blocks cf">
           <div class="block">
-            <color-picker v-model="color2" position="down" @change="change"></color-picker>
+            <color-picker v-model="color" position="down" @change="change"></color-picker>
           </div>
           <div class="block">
-            <color-picker v-model="color3" position="up"></color-picker>
+            <color-picker v-model="color2" position="up"></color-picker>
           </div>
         </div>
         <br>
         <br>
-        <p>{{ color2 }} {{ color3 }}</p>
-        <color-panel></color-panel>
+        <color-panel style="margin: 0 auto;" v-model="color2"></color-panel>
     </div>
-    <p>CHECK THIS</p><br>
     <code-snippet :value="html" type="html"></code-snippet>
 </div>
 
@@ -62,7 +62,7 @@
 <script>
 
 // code presentation
-const html = `<color-picker :value="colorA" @change="color => this.colorA = color"></color-picker>`
+const html = `<color-picker v-model="colorA"></color-picker>`
 
 export default {
   name: 'app',
@@ -70,10 +70,7 @@ export default {
     return {
       html,
       color: '#05f',
-      color2: '#50f',
-      color3: '#f05',
-      show: false,
-      show2: false
+      color2: '#50f'
     }
   },
   methods: {
@@ -83,9 +80,9 @@ export default {
   },
   mounted () {
     setTimeout(() => {
-      // this.color2 = 'rgba(212,13,195,.5)'
-      // this.color3 = '#08d'
-    }, 3000)
+      this.color = 'rgba(233, 30, 99, 1)'
+      this.color2 = '#2196f3'
+    }, 1000)
   }
 }
 </script>

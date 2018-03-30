@@ -1,6 +1,6 @@
 {
   "name": "one-colorpicker",
-  "description": "颜色选择组件 chrome edition",
+  "description": "颜色选择器 a chrome-style colorpicker",
   "version": "1.0.7",
   "author": "roei <roeichow@gmail.com>",
   "license": "MIT",
@@ -18,7 +18,6 @@
     "not ie <= 8"
   ],
   "devDependencies": {
-    "@portal/one-code-snippet": "^1.0.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
