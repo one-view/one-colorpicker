@@ -51,8 +51,8 @@
         <br>
         <br>
         <p>{{ color2 }} {{ color3 }}</p>
+        <color-panel></color-panel>
     </div>
-    <color-panel></color-panel>
     <p>CHECK THIS</p><br>
     <code-snippet :value="html" type="html"></code-snippet>
 </div>

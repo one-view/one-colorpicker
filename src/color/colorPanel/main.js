@@ -1,30 +1,28 @@
 import {getTinyColor, getElSizePosition, getValInRange, throttle} from './utility'
 import stashes from './stash'
 import Slider from './slider.vue'
-let types = ['hex', 'rgb']
-// types.pop()
-let stashTypes = Object.keys(stashes)
+
 export default {
   data () {
     return {
-      colorTypeIdx: 0,
-      stashTypeIdx: 0,
-      elSizePostion: {},
-      hue: 0,
-      origin: {
-        hex: '#f00',
-        hsv: {
-          h: 0,
-          s: 100,
-          v: 100
-        },
-        rgb: {
-          r: 255,
-          g: 0,
-          b: 0
-        },
-        alpha: 1
-      }
+      colorMode: {
+        type: ['hex', 'rgb'],
+        idx: 0
+      },
+      stashMode: {
+        type: Object.keys(stashes),
+        idx: 0
+      },
+      sizeInfo: {},
+      // color value in data logic
+      color: {
+        hue: 0,
+        saturation: 100,
+        value: 100
+      },
+      // value: 100,
+      // origin calculated by tinycolor
+      origin: getTinyColor(this.value)
     }
   },
   components: {
@@ -46,43 +44,42 @@ export default {
       let {alpha, hsv: {h, s, v}} = this.origin
       return `hsva(${h}, ${s}%, ${v}%, ${alpha})`
     },
-    hexString () {
-      return this.origin.hex
-    },
     // 仅返回当前颜色的色相，hue值
     hueString () {
-      let hue = this.hue
+      let hue = this.color.hue
       let {hex} = getTinyColor(`hsv(${hue}, 100%, 100%)`)
       return hex
     },
     hueSlideValue () {
-      let hue = this.hue
+      let hue = this.color.hue
       return Math.round(hue / 360 * 100)
     },
     opacitySlideValue () {
-      if (this.origin.alpha !== 1 && this.colorTypeIdx === 0) {
-        this.colorTypeIdx++
+      if (this.origin.alpha !== 1 && this.colorMode.idx === 0) {
+        this.colorMode.idx++
       }
       return this.origin.alpha * 100
     },
     // 返回颜色指针的坐标
-    pointerStyle () {
-      let {s, v} = this.origin.hsv
+    pointerPosition () {
+      let {saturation, value} = this.color
+      let left = `${saturation}%`
+      let top = `${100 - value}%`
       return {
-        left: `${s}%`,
-        top: `${100 - v}%`
+        left,
+        top
       }
     },
     opacityStyle () {
       return {
-        background: `linear-gradient(to right, transparent 0%, ${this.origin.hex} 100%)`
+        background: `linear-gradient(to right, transparent 0%, ${this.rgbString} 100%)`
       }
     },
     colorType () {
-      return types[this.colorTypeIdx]
+      return this.colorMode.type[this.colorMode.idx]
     },
     stashType () {
-      return stashTypes[this.stashTypeIdx]
+      return this.stashMode.type[this.stashMode.idx]
     },
     stash () {
       return stashes[this.stashType]
@@ -99,8 +96,7 @@ export default {
   },
   watch: {
     value (val) {
-      this.resetColor(val)
-      this.hue = this.origin.hsv.h
+      this.resetOrigin(val)
     }
   },
   /**
@@ -109,27 +105,33 @@ export default {
    * - modal dialog
    */
   methods: {
-    resetColor (val) {
+    resetOrigin (val) {
       this.origin = getTinyColor(val)
     },
+    resetColor () {
+      let {h, s, v} = this.origin.hsv
+      this.color.hue = h
+      this.color.saturation = s
+      this.color.value = v
+    },
     change () {
-      this.resetColor(this[`${this.colorType}String`])
-      this.hue = this.origin.hsv.h
+      this.resetOrigin(this[`${this.colorType}String`])
+      this.resetColor()
       this.emitChange()
     },
     setColor (item) {
-      this.resetColor(item)
-      this.hue = this.origin.hsv.h
+      this.resetOrigin(item)
+      this.resetColor()
       this.emitChange()
     },
     toggleMode () {
-      this.colorTypeIdx++
-      if (this.colorTypeIdx >= types.length) this.colorTypeIdx = 0
+      this.colorMode.idx++
+      if (this.colorMode.idx >= this.colorMode.type.length) this.colorMode.idx = 0
       this.emitChange()
     },
     toggleStash () {
-      this.stashTypeIdx++
-      if (this.stashTypeIdx >= stashTypes.length) this.stashTypeIdx = 0
+      this.stashMode.idx++
+      if (this.stashMode.idx >= this.stashMode.type.length) this.stashMode.idx = 0
     },
     emitChange () {
       this.$emit('input', this[`${this.colorType}String`])
@@ -144,7 +146,7 @@ export default {
       let h = Math.round(val / 100 * 360)
       let {alpha, hsv: {s, v}} = this.origin
       let color = getTinyColor(`hsva(${h}, ${s}%, ${v}%, ${alpha})`)
-      this.hue = h
+      this.color.hue = h
       this.origin = color
       this.emitChange()
     },
@@ -153,7 +155,7 @@ export default {
      * @return {[type]}     [description]
      */
     opacitySlide (val) {
-      this.colorTypeIdx = 1
+      this.colorMode.idx = 1
       this.origin.alpha = Math.round(val) / 100
       this.emitChange()
     },
@@ -167,9 +169,9 @@ export default {
     },
     onDragStart (e) {
       this.isDragging = true
-      this.elSizePostion = getElSizePosition(this.$refs.vcolors)
+      this.sizeInfo = getElSizePosition(this.$refs.vcolors)
       this.onDragging(e)
-      this.bindGlobalEvent()
+      this.registerGlobalEvent('bind')
     },
     /**
      * 移动饱和度和明暗度时，将元数据重置
@@ -179,48 +181,45 @@ export default {
     onDragging (e) {
       if (!this.isDragging) return
       let {pageX, pageY} = e
-      let {width, height, left, top} = this.elSizePostion
+      let {width, height, left, top} = this.sizeInfo
 
       let l = pageX - left - window.scrollX
       let t = pageY - top - window.scrollY
 
-      let saturation = l / width * 100
-      let value = (height - t) / height * 100
-      let {alpha} = this.origin
-      // ATTENTION: 保持 hue 不变
-      let hue = this.hue
+      let {alpha} = this.origin // opacity
+      let saturation = l / width * 100 // x axis represents saturation
+      let value = (height - t) / height * 100 // y axis represent value
+      // ATTENTION: keep hue's value
+      let hue = this.color.hue
       saturation = Math.round(getValInRange(saturation, 0, 100))
       value = Math.round(getValInRange(value, 0, 100))
-      let color = getTinyColor(`hsva(${hue}, ${saturation}%, ${value}%, ${alpha})`)
-      if (value <= 1) {
-        color.hsv.s = saturation
-      }
-      this.origin = color
+
+      console.log(saturation, value)
+      this.color.saturation = saturation
+      this.color.value = value
+
+      this.origin = getTinyColor(`hsva(${hue}, ${saturation}%, ${value}%, ${alpha})`)
       this.emitChange()
     },
+
     onDragEnd () {
       this.isDragging = false
-      this.unbindGlobalEvent()
+      this.registerGlobalEvent('unbind')
     },
     /**
-     * WHY 17 =》 just for one keyframe duration in 60FPS
+     * WHY 17 => for one keyframe duration in 60FPS
      * @return {[type]} [description]
      */
-    bindGlobalEvent () {
-      window.addEventListener('mousemove', throttle(this.onDragging, 17))
-      window.addEventListener('mouseup', this.onDragEnd)
-      window.addEventListener('contextmenu', this.onDragEnd)
-    },
-    unbindGlobalEvent () {
-      window.removeEventListener('mousemove', throttle(this.onDragging, 17))
-      window.removeEventListener('mouseup', this.onDragEnd)
-      window.removeEventListener('contextmenu', this.onDragEnd)
+    registerGlobalEvent (type) {
+      type = type === 'bind' ? 'addEventListener' : 'removeEventListener'
+      window[type]('mousemove', throttle(this.onDragging, 17))
+      window[type]('mouseup', this.onDragEnd)
+      window[type]('contextmenu', this.onDragEnd)
     }
   },
   mounted () {
     // 初始化颜色
-    this.resetColor(this.value)
-    this.hue = this.origin.hsv.h
+    this.resetColor()
     window.vcolor = this
   }
 }

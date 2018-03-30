@@ -2,7 +2,7 @@
   <!-- <div class="one-color"> -->
     <div class="one-colorpanel one-hsv">
       <div class="one-colors" @mousedown="choose" ref="vcolors">
-        <div class="one-color-pointer" :style="pointerStyle"></div>
+        <div class="one-color-pointer" :style="pointerPosition"></div>
         <div class="one-color-base" :style="{background: hueString}"></div>
         <div class="one-brightness-light"></div>
         <div class="one-brightness-dark"></div>
