@@ -1,7 +1,9 @@
 const path = require('path')
 const webpack = require('webpack')
 
-const isRELEASE = process.env.NODE_ENV === 'production'
+const env = process.env.NODE_ENV
+const isRELEASE = env === 'production'
+const isDoc = env === 'doc'
 
 function resolve (dir) {
   return path.join(__dirname, '.', dir)
@@ -10,7 +12,7 @@ function resolve (dir) {
 module.exports = {
   entry: isRELEASE ? './src/color/index.js' : './src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: isDoc ? path.resolve(__dirname, './docs') : path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
     filename: 'build.js',
     libraryTarget: 'umd'
