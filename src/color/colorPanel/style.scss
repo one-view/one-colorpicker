@@ -125,6 +125,8 @@ input[type=number]::-webkit-outer-spin-button {
     outline: none;
     border-radius: 3px;
     transition: border-color .2s ease;
+    line-height: 1;
+    font-size: 12px;
     &:hover{
       border-color: #2196f3;
     }
@@ -138,6 +140,8 @@ input[type=number]::-webkit-outer-spin-button {
     p{
       color: #999;
       margin: 5px 0;
+      line-height: 1;
+      font-size: 13px;
     }
   }
 }
