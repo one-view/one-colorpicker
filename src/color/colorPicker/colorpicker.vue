@@ -103,7 +103,10 @@ export default {
     // mounted
     document.addEventListener('click', event => {
       let isIn = this._includes(this.$refs.colorpicker, event.target)
-      if (!isIn) this.show = false
+      if (!isIn) {
+        this.show = false
+        this.$emit('afterChange', this.color)
+      }
     })
   }
 }

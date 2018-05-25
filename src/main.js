@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-// import CodeSnippet from '@portal/one-code-snippet'
+import CodeSnippet from 'one-code-snippet'
 
 // import {ColorPicker, ColorPanel} from '../dist/build.js'
 import {ColorPicker, ColorPanel} from './color'
@@ -16,7 +16,7 @@ Vue.config.productionTip = false
 Vue.use(ColorPanel)
 Vue.use(ColorPicker)
 
-// Vue.use(CodeSnippet)
+Vue.use(CodeSnippet)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
