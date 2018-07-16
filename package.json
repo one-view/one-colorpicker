@@ -1,7 +1,7 @@
 {
   "name": "one-colorpicker",
   "description": "chrome-style colorpicker vuejs",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "author": "roei <roeichow@gmail.com>",
   "license": "MIT",
   "main": "./dist/build.js",
