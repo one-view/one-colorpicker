@@ -56,7 +56,7 @@
         </div>
         <br>
         <br>
-        <color-panel style="margin: 0 auto;" v-model="color2"></color-panel>
+        <color-panel style="margin: 0 auto;" v-model="color2" mode="hex" @change="change"></color-panel>
     </div>
     <br><br><br>
     <div class="layout">
@@ -104,7 +104,7 @@ export default {
   mounted () {
     setTimeout(() => {
       this.color = 'rgba(233, 30, 99, 1)'
-      this.color2 = '#2196f3'
+      this.color2 = 'transparent'
     }, 1000)
   }
 }

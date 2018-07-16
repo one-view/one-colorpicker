@@ -25,6 +25,10 @@ export default {
     value: {
       type: Number,
       default: 0
+    },
+    disable: {
+      type: Boolean,
+      default: false
     }
   },
   // props 传入变化后监听
@@ -62,6 +66,7 @@ export default {
       }
     },
     onDragStart (e) {
+      if (this.disable) return
       this.isDragging = true
       this.resetOffset()
       this.onDragging(e)

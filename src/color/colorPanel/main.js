@@ -34,6 +34,10 @@ export default {
     value: {
       type: String,
       default: '#f00'
+    },
+    mode: {
+      type: String,
+      default: 'all'
     }
   },
   computed: {
@@ -47,7 +51,8 @@ export default {
       return `hsva(${h}, ${s}%, ${v}%, ${alpha})`
     },
     hexString () {
-      return this.origin.hex
+      let isTransparent = this.rgbString === 'rgba(255, 255, 255, 0)'
+      return isTransparent ? 'transparent' : this.origin.hex
     },
     // 仅返回当前颜色的色相，hue值
     hueString () {
@@ -133,6 +138,7 @@ export default {
     toggleMode () {
       this.colorMode.idx++
       if (this.colorMode.idx >= this.colorMode.type.length) this.colorMode.idx = 0
+      this.origin.alpha = 1
       this.emitChange()
     },
     toggleStash () {
@@ -141,8 +147,9 @@ export default {
     },
     emitChange () {
       this.$nextTick(() => {
-        this.$emit('input', this[`${this.colorType}String`])
-        this.$emit('change', this[`${this.colorType}String`])
+        let type = this.mode === 'all' ? this.colorType : this.mode
+        this.$emit('input', this[`${type}String`])
+        this.$emit('change', this[`${type}String`])
       })
     },
     /**

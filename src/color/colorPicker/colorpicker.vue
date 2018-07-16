@@ -37,7 +37,7 @@
       <div class="color-block-layer value" :style="{backgroundColor: color}"></div>
       <div class="color-block-layer bg"></div>
     </div>
-    <color-panel v-show="show" v-model="color" :style="panelStyle" @change="change"></color-panel>
+    <color-panel v-show="show" v-model="color" :style="panelStyle" :mode="mode" @change="change"></color-panel>
   </div>
 
 </template>
@@ -73,6 +73,10 @@ export default {
     value: {
       type: String
     },
+    mode: {
+      type: String,
+      default: 'all'
+    },
     position: {
       type: [String, Object],  // up | down
       default: 'down'
@@ -105,7 +109,7 @@ export default {
       let isIn = this._includes(this.$refs.colorpicker, event.target)
       if (!isIn) {
         this.show = false
-        this.$emit('afterChange', this.color)
+        // this.$emit('afterChange', this.color)
       }
     })
   }
