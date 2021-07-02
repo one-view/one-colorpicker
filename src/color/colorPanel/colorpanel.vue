@@ -26,7 +26,7 @@
             <ul>
               <li>
                 <input v-model="origin.hex" @change="change">
-                <p>{{colorType}}</p>
+                <p>{{ colorType.toUpperCase() }}</p>
               </li>
             </ul>
           </div>
@@ -36,19 +36,19 @@
             <ul>
               <li>
                 <input v-model.number="origin.rgb.r" type="number" @change="change">
-                <p>r</p>
+                <p>R</p>
               </li>
               <li>
                 <input v-model.number="origin.rgb.g" type="number" @change="change">
-                <p>g</p>
+                <p>G</p>
               </li>
               <li>
                 <input v-model.number="origin.rgb.b" type="number" @change="change">
-                <p>b</p>
+                <p>B</p>
               </li>
               <li>
                 <input v-model.number="origin.alpha" type="number" step="0.01" @change="change">
-                <p>a</p>
+                <p>A</p>
               </li>
             </ul>
           </div>

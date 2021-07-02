@@ -73,7 +73,7 @@
   position: relative;
   overflow: hidden;
   border: 1px solid #eee;
-  .transparent
+  .transparent();
   div{
     height: 100%;
     width: 100%;
@@ -96,7 +96,7 @@
     width: 100%;
     border-radius: 3px;
     box-shadow: 0 0 1px 0 rgba(0,0,0,.2);
-    // @include transparent();
+    .transparent();
   }
   .one-color-slider{
     width: 170px;
@@ -159,7 +159,7 @@ input[type=number]::-webkit-outer-spin-button {
   position: relative;
   display: block;
   width: 20px;
-  height: 26px;
+  height: 24px;
   border-radius: 3px;
   transition: background-color .2s ease;
   &:hover{
@@ -169,8 +169,8 @@ input[type=number]::-webkit-outer-spin-button {
   &:after{
     position: absolute;
     content: '';
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     top: 10px;
   }
   &:before{

@@ -1,6 +1,6 @@
 import { getTinyColor, getElSizePosition, getValInRange, throttle } from './utility'
-import stashes from './stash'
-import Slider from './slider.vue'
+import stashes from './colorstash'
+import Slider from './colorslider'
 
 export default {
   data () {
