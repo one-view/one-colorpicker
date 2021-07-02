@@ -1,4 +1,5 @@
 const path = require('path')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const webpack = require('webpack')
 
 const env = process.env.NODE_ENV
@@ -27,19 +28,11 @@ module.exports = {
         ]
       },
       {
-        test: /\.scss$/,
+        test: /\.less$/,
         use: [
           'vue-style-loader',
           'css-loader',
-          'sass-loader'
-        ]
-      },
-      {
-        test: /\.sass$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader?indentedSyntax'
+          'less-loader'
         ]
       },
       {
@@ -47,19 +40,6 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
-            // the "scss" and "sass" values for the lang attribute to the right configs here.
-            // other preprocessors should work out of the box, no loader config like this necessary.
-            'scss': [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader'
-            ],
-            'sass': [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loader?indentedSyntax'
-            ]
           }
           // other vue-loader options go here
         }
@@ -80,7 +60,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
+      vue$: 'vue/dist/vue.esm.js',
       '@': resolve('src')
     },
     extensions: ['*', '.js', '.vue', '.json']
@@ -90,6 +70,9 @@ module.exports = {
     noInfo: true,
     overlay: true
   },
+  plugins: [
+    new VueLoaderPlugin()
+  ],
   performance: {
     hints: false
   },

@@ -1,4 +1,4 @@
-<style lang="scss">
+<style lang="less">
 .one-colorpicker {
   position: relative;
   display: inline-block;

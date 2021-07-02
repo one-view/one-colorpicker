@@ -24,16 +24,17 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.0.5",
-    "css-loader": "^0.28.7",
+    "css-loader": "^5.2.6",
     "file-loader": "^1.1.4",
-    "highlight.js": "^9.12.0",
-    "node-sass": "^4.5.3",
+    "highlight.js": "^10.0.0",
+    "less": "^3.12.2",
+    "less-loader": "^5.0.0",
     "one-code-snippet": "^1.0.2",
-    "sass-loader": "^6.0.6",
-    "vue": "^2.5.16",
-    "vue-loader": "^13.0.5",
-    "vue-template-compiler": "^2.5.16",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "vue": "^2.6.12",
+    "vue-loader": "^15.9.5",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   }
 }

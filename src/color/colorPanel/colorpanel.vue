@@ -68,4 +68,4 @@
 </template>
 
 <script src="./main.js"></script>
-<style src="./style.scss" lang="scss"></style>
+<style src="./style.less" lang="less"></style>

@@ -118,10 +118,10 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-$h: 12px;
-$pointSize: 12px;
-$color: #3449d7;
+<style lang="less" scoped>
+@h: 12px;
+@pointSize: 12px;
+@color: #3449d7;
 .color-slider{
   position: relative;
   &-slot{
@@ -130,32 +130,32 @@ $color: #3449d7;
     width: 20px;
   }
   &-slot-acitve{
-    // background-color: $color;
+    // background-color: @color;
   }
   &-pointer{
     position: absolute;
     top: 0;
-    width: $pointSize;
-    height: $pointSize;
+    width: @pointSize;
+    height: @pointSize;
     background-color: rgba(255,255,255,1);
-    border-radius: $pointSize;
+    border-radius: @pointSize;
     box-shadow: 0 0 5px 0 rgba(0,0,0,.4);
     cursor: pointer;
     &:hover{
-      box-shadow: 0 0 5px $color;
+      box-shadow: 0 0 5px @color;
     }
   }
   &-horizontal{
     height: 100%;
     .color-slider{
       &-slot{
-        height: $h;
+        height: @h;
         width: 100%;
       }
       &-pointer{
         left: 0;
-        top: ($h - $pointSize) / 2;
-        transform: translateX(-$pointSize/2);
+        top: (@h - @pointSize) / 2;
+        transform: translateX( -@pointSize / 2 );
       }
     }
   }

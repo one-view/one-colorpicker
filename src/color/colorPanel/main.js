@@ -1,11 +1,11 @@
-import {getTinyColor, getElSizePosition, getValInRange, throttle} from './utility'
+import { getTinyColor, getElSizePosition, getValInRange, throttle } from './utility'
 import stashes from './stash'
 import Slider from './slider.vue'
 
 export default {
   data () {
-    let origin = getTinyColor(this.value)
-    let {h, s, v} = origin.hsv
+    const origin = getTinyColor(this.value)
+    const { h, s, v } = origin.hsv
     return {
       colorMode: {
         type: ['hex', 'rgb'],
@@ -43,25 +43,25 @@ export default {
   computed: {
     // 返回当前颜色的RGBA
     rgbString () {
-      let {alpha, rgb: {r, g, b}} = this.origin
+      const { alpha, rgb: { r, g, b } } = this.origin
       return `rgba(${r}, ${g}, ${b}, ${alpha})`
     },
     hsvString () {
-      let {alpha, hsv: {h, s, v}} = this.origin
+      const { alpha, hsv: { h, s, v } } = this.origin
       return `hsva(${h}, ${s}%, ${v}%, ${alpha})`
     },
     hexString () {
-      let isTransparent = this.rgbString === 'rgba(255, 255, 255, 0)'
+      const isTransparent = this.rgbString === 'rgba(255, 255, 255, 0)'
       return isTransparent ? 'transparent' : this.origin.hex
     },
     // 仅返回当前颜色的色相，hue值
     hueString () {
-      let hue = this.color.hue
-      let {hex} = getTinyColor(`hsv(${hue}, 100%, 100%)`)
+      const hue = this.color.hue
+      const { hex } = getTinyColor(`hsv(${hue}, 100%, 100%)`)
       return hex
     },
     hueSlideValue () {
-      let hue = this.color.hue
+      const hue = this.color.hue
       return Math.round(hue / 360 * 100)
     },
     opacitySlideValue () {
@@ -72,9 +72,9 @@ export default {
     },
     // 返回颜色指针的坐标
     pointerPosition () {
-      let {saturation, value} = this.color
-      let left = `${saturation}%`
-      let top = `${100 - value}%`
+      const { saturation, value } = this.color
+      const left = `${saturation}%`
+      const top = `${100 - value}%`
       return {
         left,
         top
@@ -120,7 +120,7 @@ export default {
       this.origin = getTinyColor(val)
     },
     resetColor () {
-      let {h, s, v} = this.origin.hsv
+      const { h, s, v } = this.origin.hsv
       this.color.hue = h
       this.color.saturation = s
       this.color.value = v
@@ -147,7 +147,7 @@ export default {
     },
     emitChange () {
       this.$nextTick(() => {
-        let type = this.mode === 'all' ? this.colorType : this.mode
+        const type = this.mode === 'all' ? this.colorType : this.mode
         this.$emit('input', this[`${type}String`])
         this.$emit('change', this[`${type}String`])
       })
@@ -158,9 +158,9 @@ export default {
      * @return {[type]}     [description]
      */
     hueSlide (val) {
-      let h = Math.round(val / 100 * 360)
-      let {alpha, hsv: {s, v}} = this.origin
-      let color = getTinyColor(`hsva(${h}, ${s}%, ${v}%, ${alpha})`)
+      const h = Math.round(val / 100 * 360)
+      const { alpha, hsv: { s, v } } = this.origin
+      const color = getTinyColor(`hsva(${h}, ${s}%, ${v}%, ${alpha})`)
       this.color.hue = h
       this.origin = color
       this.emitChange()
@@ -195,17 +195,17 @@ export default {
      */
     onDragging (e) {
       if (!this.isDragging) return
-      let {pageX, pageY} = e
-      let {width, height, left, top} = this.sizeInfo
+      const { pageX, pageY } = e
+      const { width, height, left, top } = this.sizeInfo
 
-      let l = pageX - left - window.scrollX
-      let t = pageY - top - window.scrollY
+      const l = pageX - left - window.scrollX
+      const t = pageY - top - window.scrollY
 
-      let {alpha} = this.origin // opacity
+      const { alpha } = this.origin // opacity
       let saturation = l / width * 100 // x axis represents saturation
       let value = (height - t) / height * 100 // y axis represent value
       // ATTENTION: keep hue's value
-      let hue = this.color.hue
+      const hue = this.color.hue
       saturation = Math.round(getValInRange(saturation, 0, 100))
       value = Math.round(getValInRange(value, 0, 100))
 

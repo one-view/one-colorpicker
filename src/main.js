@@ -5,7 +5,7 @@ import App from './App'
 import CodeSnippet from 'one-code-snippet'
 
 // import {ColorPicker, ColorPanel} from '../dist/build.js'
-import {ColorPicker, ColorPanel} from './color'
+import { ColorPicker, ColorPanel } from './color'
 
 import hljs from 'highlight.js'
 import 'highlight.js/styles/atom-one-dark.css'
@@ -18,8 +18,7 @@ Vue.use(ColorPicker)
 
 Vue.use(CodeSnippet)
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  template: '<App/>',
-  components: { App }
+const app = new Vue({
+  render: h => h(App)
 })
+app.$mount('#app')
