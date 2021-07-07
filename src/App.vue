@@ -10,13 +10,17 @@
   </div>
   <div class="layout">
     <div class="page">
-      <div class="left">
-        <!-- <span :style="{backgroundColor: color, color: '#fff'}">{{ color }} Choose Color Click blocks below</span> -->
-        <h3>A: 颜色选择组件</h3>
-        <color-picker v-model="color" :position="{left: '20px', top: '40px'}" @change="change"></color-picker>
-        <span :style="{backgroundColor: color, color: '#fff'}">{{ color }} Choosed Color</span>
-        <h3>B: 颜色选择面板</h3>
-        <color-panel style="margin: 0 auto;" v-model="color2" mode="hex" @change="change"></color-panel>
+      <h2>组件包含</h2>
+      <div class="module-flex">
+        <div class="flex-item">
+          <h3>A: &lt;color-picker&gt;</h3>
+          <color-picker v-model="color" :position="{left: '20px', top: '40px'}" @change="change"></color-picker>
+          <p>you choose color: <span :style="{backgroundColor: color, color: '#fff', padding: '5px'}">{{ color }}</span></p>
+        </div>
+        <div class="flex-item">
+          <h3>B: &lt;color-panel&gt;</h3>
+          <color-panel style="margin: 0 auto;" v-model="color2" mode="hex" @change="change"></color-panel>
+        </div>
       </div>
     </div>
   </div>
@@ -145,6 +149,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
 }
+.page {
+  h2 {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+}
 .head {
   height: 50vh;
   display: flex;
@@ -166,9 +177,15 @@ body {
     pointer-events: none;
   }
 }
+.module-flex {
+  display: flex;
+  .flex-item {
+    width: 400px;
+  }
+}
 
 .layout{
-  height: 100vh;
+  min-height: 100vh;
   // max-height: 800px;
   display: flex;
   align-items: center;

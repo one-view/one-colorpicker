@@ -226,7 +226,7 @@ export default {
      */
     registerGlobalEvent (type) {
       type = type === 'bind' ? 'addEventListener' : 'removeEventListener'
-      window[type]('mousemove', throttle(this.onDragging, 17))
+      window[type]('mousemove', throttle(this.onDragging, 16.7))
       window[type]('mouseup', this.onDragEnd)
       window[type]('contextmenu', this.onDragEnd)
     }

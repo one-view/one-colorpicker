@@ -18,17 +18,17 @@ export function contains (el, child) {
  * @return {[type]}       [description]
  */
 export const getTinyColor = value => {
-  let color = tinycolor(value)
-  let isValid = color.isValid()
+  const color = tinycolor(value)
+  const isValid = color.isValid()
   if (isValid) {
-    let {h, s, v} = color.toHsv()
-    let {r, g, b} = color.toRgb()
+    let { h, s, v } = color.toHsv()
+    const { r, g, b } = color.toRgb()
     h = Math.round(h)
     s = Math.round(s * 100)
     v = Math.round(v * 100)
     return {
-      rgb: {r, g, b},
-      hsv: {h, s, v},
+      rgb: { r, g, b },
+      hsv: { h, s, v },
       hex: color.toHexString(),
       alpha: color.getAlpha()
     }
@@ -36,8 +36,8 @@ export const getTinyColor = value => {
     // 不合法时返回默认值：红色
     console.warn('WARN: value is not valid')
     return {
-      rgb: {r: 255, g: 0, b: 0, a: 1},
-      hsv: {h: 0, s: 100, v: 100, a: 1},
+      rgb: { r: 255, g: 0, b: 0, a: 1 },
+      hsv: { h: 0, s: 100, v: 100, a: 1 },
       hex: '#f00',
       alpha: 1
     }
@@ -73,8 +73,8 @@ export const throttle = (fn, threshhold, scope) => {
   let last
   let deferTimer
   return (...args) => {
-    let context = scope || this
-    let now = Date.now()
+    const context = scope || this
+    const now = Date.now()
     if (last && now < last + threshhold) {
       clearTimeout(deferTimer)
       deferTimer = setTimeout(() => {

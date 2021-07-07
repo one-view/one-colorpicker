@@ -105,12 +105,12 @@ export default {
     bindGlobalEvent () {
       window.addEventListener('mousemove', this.onDragging)
       window.addEventListener('mouseup', this.onDragEnd)
-      window.addEventListener('contextmenu', this.onDragEnd)
+      // window.addEventListener('contextmenu', this.onDragEnd)
     },
     unbindGlobalEvent () {
       window.removeEventListener('mousemove', this.onDragging)
       window.removeEventListener('mouseup', this.onDragEnd)
-      window.removeEventListener('contextmenu', this.onDragEnd)
+      // window.removeEventListener('contextmenu', this.onDragEnd)
     }
   },
   mounted () {

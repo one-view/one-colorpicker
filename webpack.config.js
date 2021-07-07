@@ -12,6 +12,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: isRELEASE ? './src/color/index.js' : './src/main.js',
+  mode: isRELEASE ? 'production' : 'development',
   output: {
     path: isDoc ? path.resolve(__dirname, './docs') : path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
@@ -87,15 +88,9 @@ if (process.env.NODE_ENV !== 'development') {
       'process.env': {
         NODE_ENV: '"production"'
       }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
     })
   ])
+  module.exports.optimization = {
+    minimize: true
+  }
 }
